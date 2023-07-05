@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import {Context} from "..store/appContext";
-
+import { Context } from "../store/appContext";
 import { ContactCard } from "../component/ContactCard.js";
 import { Modal } from "../component/Modal";
 
@@ -11,12 +10,12 @@ export const Contacts = () => {
 	});
 	console.log(useContext(Context));
 
-	const {store, actions} = useContext(Context)
+	const { store, actions } = useContext(Context);
 
 	//llamamos a los contactos al iniciar pagina
-	useEffect(()=>{
-		actions.getContacts()
-	},[])
+	useEffect(() => {
+		actions.getContacts();
+	}, []);
 
 	console.log(store.contacts);
 
@@ -30,10 +29,21 @@ export const Contacts = () => {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						<ContactCard onDelete={() => setState({ showModal: true })} />
+						{store.contacts.map(item => (
+							<ContactCard
+								key={item.id}
+								name={item.full_name}
+								address={item.address}
+								phone={item.phone}
+								email={item.email}
+								onDelete={() => setState({ showModal: true })}
+							/>
+						))}
+
+						{/*<ContactCard onDelete={() => setState({ showModal: true })} />
+							<ContactCard />
 						<ContactCard />
-						<ContactCard />
-						<ContactCard />
+						<ContactCard /> */}
 					</ul>
 				</div>
 			</div>
