@@ -2,7 +2,8 @@ const getState = ({ getStore, setStore }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
-			contacts: []
+			contacts: [],
+			newContact: {}
 		},
 		actions: {
 			//(Arrow) Functions that update the Store
@@ -17,9 +18,13 @@ const getState = ({ getStore, setStore }) => {
 					.catch(error => console.log(error));
 			},
 
-			createContacts: () => {
+			createContacts: valores => {
 				fetch("https://assets.breatheco.de/apis/fake/contact/", {
-					method: "POST"
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify([valores])
 				})
 					.then(response => response.json())
 					//.then(data => console.log(data))

@@ -8,7 +8,7 @@ export const Contacts = () => {
 	const [state, setState] = useState({
 		showModal: false
 	});
-	console.log(useContext(Context));
+	//console.log(useContext(Context));
 
 	const { store, actions } = useContext(Context);
 
@@ -17,7 +17,7 @@ export const Contacts = () => {
 		actions.getContacts();
 	}, []);
 
-	console.log(store.contacts);
+	//console.log(store.contacts);
 
 	return (
 		<div className="container">
