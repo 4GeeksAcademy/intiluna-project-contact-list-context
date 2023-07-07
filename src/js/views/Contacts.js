@@ -29,16 +29,18 @@ export const Contacts = () => {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						{store.contacts.map(item => (
-							<ContactCard
-								key={item.id}
-								name={item.full_name}
-								address={item.address}
-								phone={item.phone}
-								email={item.email}
-								onDelete={() => setState({ showModal: true })}
-							/>
-						))}
+						{store.contacts.length > 0
+							? store.contacts.map(item => (
+									<ContactCard
+										key={item.id}
+										name={item.full_name}
+										address={item.address}
+										phone={item.phone}
+										email={item.email}
+										onDelete={() => setState({ showModal: true })}
+									/>
+							  ))
+							: "Cargando"}
 
 						{/*<ContactCard onDelete={() => setState({ showModal: true })} />
 							<ContactCard />
