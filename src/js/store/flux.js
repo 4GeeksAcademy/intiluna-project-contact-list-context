@@ -1,9 +1,10 @@
-const getState = ({ getStore, setStore }) => {
+const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
 			contacts: [],
-			newContact: {}
+			newContact: {},
+			contactToEdit: {}
 		},
 		actions: {
 			//(Arrow) Functions that update the Store
@@ -16,6 +17,18 @@ const getState = ({ getStore, setStore }) => {
 					//.then(data => console.log(data))
 					.then(data => setStore({ contacts: data }))
 					.catch(error => console.log(error));
+			},
+			// get one contact
+			getOneContact: id => {
+				console.log(`getting specific contact information for ${id}`);
+				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
+					method: "GET"
+				})
+					.then(response => response.json())
+					//.then(data => console.log(data))
+					.then(data => setStore({ contactToEdit: data }))
+					.catch(error => console.log(error));
+				console.log(getStore().contactToEdit);
 			},
 
 			createContacts: valores => {
@@ -32,12 +45,18 @@ const getState = ({ getStore, setStore }) => {
 					.catch(error => console.log(error));
 			},
 			//Delete
-			deleteContacts: key => {
-				fetch(`https://assets.breatheco.de/apis/fake/contact/${key}`, {
+			deleteContacts: id => {
+				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
 					method: "DELETE"
 				})
-					.then(response => response.json())
-					.then(data => console.log(data))
+					.then(response => {
+						console.log(response);
+						if (response.ok === true) {
+							getActions().getContacts();
+						}
+						return response.json();
+					})
+					//.then(data => console.log(data))
 					//.then(data => setStore({ contacts: data }))
 					.catch(error => console.log(error));
 			}

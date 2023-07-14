@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import { withRouter } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+//import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import MikePhoto from "../../img/m101.jpg";
 //import { useContext } from "react/cjs/react.production.min";
@@ -10,7 +11,11 @@ export const ContactCard = props => {
 		//initialize state here
 	});
 
-	const { store } = useContext(Context);
+	const { store, actions } = useContext(Context);
+
+	// function editContact() {
+	// 	console.log();
+	// }
 
 	return (
 		<li className="list-group-item">
@@ -20,9 +25,10 @@ export const ContactCard = props => {
 				</div>
 				<div className="col-12 col-sm-6 col-md-9 text-center text-sm-left">
 					<div className=" float-right">
-						<button className="btn">
+						{/* <button className="btn" onClick={() => actions.getOneContact(props.id)}> */}
+						<Link className="btn" to={"/edit/" + props.id}>
 							<i className="fas fa-pencil-alt mr-3" />
-						</button>
+						</Link>
 						<button className="btn" onClick={() => props.onDelete()}>
 							<i className="fas fa-trash-alt" />
 						</button>
@@ -47,6 +53,7 @@ export const ContactCard = props => {
 						title=""
 					/>
 					<span className="text-muted small text-truncate">{props.email}</span>
+					<span className="text-muted small text-truncate">{props.id}</span>
 				</div>
 			</div>
 		</li>
@@ -63,7 +70,8 @@ ContactCard.propTypes = {
 	name: PropTypes.string,
 	phone: PropTypes.string,
 	address: PropTypes.string,
-	email: PropTypes.string
+	email: PropTypes.string,
+	id: PropTypes.string
 };
 
 /**

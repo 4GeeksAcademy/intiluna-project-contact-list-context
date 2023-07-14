@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ContactCard } from "../component/ContactCard.js";
 import { Modal } from "../component/Modal";
 
 export const Contacts = () => {
 	const [state, setState] = useState({
-		showModal: false
+		showModal: false,
+		id: null
 	});
 	//console.log(useContext(Context));
 
@@ -37,7 +38,8 @@ export const Contacts = () => {
 										address={item.address}
 										phone={item.phone}
 										email={item.email}
-										onDelete={() => setState({ showModal: true })}
+										id={item.id}
+										onDelete={() => setState({ showModal: true, id: item.id })}
 									/>
 							  ))
 							: "Cargando"}
@@ -49,7 +51,7 @@ export const Contacts = () => {
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} id={state.id} onClose={() => setState({ showModal: false })} />
 		</div>
 	);
 };
