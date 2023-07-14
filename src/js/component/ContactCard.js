@@ -26,7 +26,12 @@ export const ContactCard = props => {
 				<div className="col-12 col-sm-6 col-md-9 text-center text-sm-left">
 					<div className=" float-right">
 						{/* <button className="btn" onClick={() => actions.getOneContact(props.id)}> */}
-						<Link className="btn" to={"/edit/" + props.id}>
+						<Link
+							onClick={() =>
+								actions.getOneContact(props.id, props.name, props.address, props.phone, props.email)
+							}
+							className="btn"
+							to={"/edit/" + props.id}>
 							<i className="fas fa-pencil-alt mr-3" />
 						</Link>
 						<button className="btn" onClick={() => props.onDelete()}>

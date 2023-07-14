@@ -19,16 +19,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log(error));
 			},
 			// get one contact
-			getOneContact: id => {
-				console.log(`getting specific contact information for ${id}`);
+			getOneContact: (id, name, address, phone, email) => {
+				console.log(`passing specific contact information for ${id}`);
+				setStore({
+					contactToEdit: {
+						id: id,
+						agenda_slug: "agenda_intiluna",
+						full_name: name,
+						email: email,
+						phone: phone,
+						address: address
+					}
+				});
+			},
+
+			// getOneContact: id => {
+			// 	console.log(`getting specific contact information for ${id}`);
+			// 	fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
+			// 		method: "GET"
+			// 	})
+			// 		.then(response => response.json())
+			// 		//.then(data => console.log(data))
+			// 		.then(data => setStore({ contactToEdit: data }))
+			// 		.catch(error => console.log(error));
+			// 	console.log(getStore().contactToEdit);
+			// },
+			// edit one contact
+
+			editOneContact: (id, valores) => {
 				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
-					method: "GET"
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(valores)
 				})
 					.then(response => response.json())
 					//.then(data => console.log(data))
-					.then(data => setStore({ contactToEdit: data }))
+					.then(data => setStore({ contacts: data }))
 					.catch(error => console.log(error));
-				console.log(getStore().contactToEdit);
 			},
 
 			createContacts: valores => {

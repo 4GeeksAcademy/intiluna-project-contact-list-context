@@ -1,24 +1,26 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router";
+//import { useParams } from "react-router";
 
 export const EditContact = () => {
-	const params = useParams();
+	//	const params = useParams();
 	const { store, actions } = useContext(Context);
 
-	const [inputName, setInputName] = useState(store.contactToEdit.full_name);
-	const [inputEmail, setInputEmail] = useState("");
-	const [inputPhone, setInputPhone] = useState("");
-	const [inputAddress, setInputAddress] = useState("");
+	console.log(store.contactToEdit);
 
-	useEffect(() => {
-		actions.getOneContact(params.id);
-	}, []);
+	const [inputName, setInputName] = useState(store.contactToEdit.full_name);
+	const [inputEmail, setInputEmail] = useState(store.contactToEdit.email);
+	const [inputPhone, setInputPhone] = useState(store.contactToEdit.phone);
+	const [inputAddress, setInputAddress] = useState(store.contactToEdit.address);
+
+	// useEffect(() => {
+	// 	actions.getOneContact(params.id);
+	// }, []);
 	// handle click
 	//console.log(store.newContact);
 
-	function handleSave(e) {
+	function handleEdit(e) {
 		e.preventDefault();
 		/*console.log({
 			full_name: inputName,
@@ -28,14 +30,16 @@ export const EditContact = () => {
 			phone: inputPhone
 		})
 		*/
+		//console.log(store.contactToEdit.id);
 
-		actions.createContacts({
+		actions.editOneContact(store.contactToEdit.id, {
 			full_name: inputName,
 			email: inputEmail,
 			agenda_slug: "agenda_intiluna",
 			address: inputAddress,
 			phone: inputPhone
 		});
+
 		setInputName("");
 		setInputEmail("");
 		setInputPhone("");
@@ -53,6 +57,8 @@ export const EditContact = () => {
 							type="text"
 							className="form-control"
 							placeholder="Full Name"
+							//defaultValue={store.contactToEdit.full_name}
+							//defaultValue="1000"
 							onChange={e => setInputName(e.target.value)}
 							value={inputName}
 						/>
@@ -87,7 +93,7 @@ export const EditContact = () => {
 							value={inputAddress}
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control" onClick={e => handleSave(e)}>
+					<button type="button" className="btn btn-primary form-control" onClick={e => handleEdit(e)}>
 						save
 					</button>
 					<Link className="mt-3 w-100 text-center" to="/">
